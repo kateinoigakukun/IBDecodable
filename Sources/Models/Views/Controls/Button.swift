@@ -49,6 +49,7 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
         public let key: String?
         public let title: String?
         public let color: Color?
+        public let attributedString: AttributedString?
         public let image: String?
         public let catalog: String?
 
@@ -58,6 +59,7 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
                 key: try container.attribute(of: .key),
                 title: container.attributeIfPresent(of: .title),
                 color: container.elementIfPresent(of: .color),
+                attributedString: container.elementIfPresent(of: .attributedString),
                 image: container.attributeIfPresent(of: .image),
                 catalog: container.attributeIfPresent(of: .catalog)
             )
