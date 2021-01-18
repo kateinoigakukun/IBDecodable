@@ -12,9 +12,11 @@ public enum Color: IBDecodable {
     public typealias CalibratedWhite = (key: String?, white: Float, alpha: Float)
     public typealias CalibratedRGB = SRGB
     public typealias SRGB = (key: String?, red: Float, blue: Float, green: Float, alpha: Float)
+    public typealias GenericGamma22Gray = CalibratedWhite
     public typealias Named = (key: String?, name: String)
     case calibratedWhite(CalibratedWhite)
     case calibratedRGB(CalibratedRGB)
+    case genericGamma22Gray(GenericGamma22Gray)
     case sRGB(SRGB)
     case name(Named)
     case systemColor(Named)
@@ -107,6 +109,11 @@ public enum Color: IBDecodable {
                                       green: sRGBContainer.attribute(of: .green),
                                       alpha: sRGBContainer.attribute(of: .alpha)
                     ))
+                case "genericGamma22GrayColorSpace":
+                    let calibratedWhiteContainer = xml.container(keys: CalibratedWhiteCodingKeys.self)
+                    return try .genericGamma22Gray((key:   key,
+                                                    white: calibratedWhiteContainer.attribute(of: .white),
+                                                    alpha: calibratedWhiteContainer.attribute(of: .alpha)))
                 default:
                     throw IBError.unsupportedColorSpace(customColorSpace)
                 }
@@ -135,6 +142,8 @@ extension Color: AttributeProtocol {
             return calibratedRgb.key
         case .sRGB(let srgb):
             return srgb.key
+        case .genericGamma22Gray(let genericGamma22Gray):
+            return genericGamma22Gray.key
         case .name(let named):
             return named.key
         case .systemColor(let named):
