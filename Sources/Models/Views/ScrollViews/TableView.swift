@@ -28,6 +28,7 @@ public struct TableView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let estimatedRowHeight: Float?
     public let isMisplaced: Bool?
     public let isAmbiguous: Bool?
+    public let isHidden: Bool?
     public let verifyAmbiguity: VerifyAmbiguity?
     public let opaque: Bool?
     public let rect: Rect?
@@ -60,6 +61,10 @@ public struct TableView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let headersFooters: [AnyView]?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let horizontalHuggingPriority: Int?
+    public let verticalHuggingPriority: Int?
+    public let horizontalCompressionResistancePriority: Int?
+    public let verticalCompressionResistancePriority: Int?
 
     public enum DataMode: XMLAttributeDecodable, KeyDecodable, Equatable {
         case `static`, prototypes
@@ -98,6 +103,7 @@ public struct TableView: IBDecodable, ViewProtocol, IBIdentifiable {
                 switch key {
                 case .isMisplaced: return "misplaced"
                 case .isAmbiguous: return "ambiguous"
+                case .isHidden: return "hidden"
                 case .prototypeCells: return "prototypes"
                 case .isPagingEnabled: return "pagingEnabled"
                 case .isDirectionalLockEnabled: return "directionalLockEnabled"
@@ -129,6 +135,7 @@ public struct TableView: IBDecodable, ViewProtocol, IBIdentifiable {
             estimatedRowHeight:                        container.attributeIfPresent(of: .estimatedRowHeight),
             isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
             isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
+            isHidden:                                  container.attributeIfPresent(of: .isHidden),
             verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
             opaque:                                    container.attributeIfPresent(of: .opaque),
             rect:                                      container.elementIfPresent(of: .rect),
@@ -157,7 +164,11 @@ public struct TableView: IBDecodable, ViewProtocol, IBIdentifiable {
             isDirectionalLockEnabled:                  container.attributeIfPresent(of: .isDirectionalLockEnabled),
             headersFooters:                            container.elementsIfPresent(of: .headersFooters),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
-            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue)
+            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+            verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
+            horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
+            verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority)
         )
     }
 }
@@ -211,6 +222,7 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
     public let colorLabel: String?
     public let isMisplaced: Bool?
     public let isAmbiguous: Bool?
+    public let isHidden: Bool?
     public let verifyAmbiguity: VerifyAmbiguity?
     public let opaque: Bool?
     public let rect: Rect?
@@ -226,6 +238,10 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
     public let reuseIdentifier: String?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let horizontalHuggingPriority: Int?
+    public let verticalHuggingPriority: Int?
+    public let horizontalCompressionResistancePriority: Int?
+    public let verticalCompressionResistancePriority: Int?
 
     public var children: [IBElement] {
         // do not let default implementation which lead to duplicate element contentView
@@ -260,8 +276,9 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
         public let userLabel: String?
         public let colorLabel: String?
         public let isMisplaced: Bool?
-    public let isAmbiguous: Bool?
-    public let verifyAmbiguity: VerifyAmbiguity?
+        public let isAmbiguous: Bool?
+        public let isHidden: Bool?
+        public let verifyAmbiguity: VerifyAmbiguity?
         public let opaque: Bool?
         public let rect: Rect?
         public let subviews: [AnyView]?
@@ -272,6 +289,10 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
         public let variations: [Variation]?
         public let backgroundColor: Color?
         public let tintColor: Color?
+        public let horizontalHuggingPriority: Int?
+        public let verticalHuggingPriority: Int?
+        public let horizontalCompressionResistancePriority: Int?
+        public let verticalCompressionResistancePriority: Int?
 
         static func decode(_ xml: XMLIndexerType) throws -> TableViewCell.TableViewContentView {
             let container = xml.container(keys: MappedCodingKey.self).map { (key: CodingKeys) in
@@ -279,6 +300,7 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
                     switch key {
                     case .isMisplaced: return "misplaced"
                     case .isAmbiguous: return "ambiguous"
+                case .isHidden: return "hidden"
                     default: return key.stringValue
                     }
                 }()
@@ -302,8 +324,9 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
                 userLabel:                                 container.attributeIfPresent(of: .userLabel),
                 colorLabel:                                container.attributeIfPresent(of: .colorLabel),
                 isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
-            isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
-            verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
+                isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
+                isHidden:                                  container.attributeIfPresent(of: .isHidden),
+                verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
                 opaque:                                    container.attributeIfPresent(of: .opaque),
                 rect:                                      container.elementIfPresent(of: .rect),
                 subviews:                                  container.childrenIfPresent(of: .subviews),
@@ -313,7 +336,11 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
                 connections:                               container.childrenIfPresent(of: .connections),
                 variations:                                variationContainer.elementsIfPresent(of: .variation),
                 backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
-                tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue)
+                tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+                horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+                verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
+                horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
+                verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority)
             )
         }
     }
@@ -329,6 +356,7 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
                 switch key {
                 case .isMisplaced: return "misplaced"
                 case .isAmbiguous: return "ambiguous"
+                case .isHidden: return "hidden"
                 case ._subviews: return "subview"
                 case .contentView: return "tableViewCellContentView"
                 default: return key.stringValue
@@ -356,6 +384,7 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
             colorLabel:                                container.attributeIfPresent(of: .colorLabel),
             isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
             isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
+            isHidden:                                  container.attributeIfPresent(of: .isHidden),
             verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
             opaque:                                    container.attributeIfPresent(of: .opaque),
             rect:                                      container.elementIfPresent(of: .rect),
@@ -367,7 +396,11 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
             variations:                                variationContainer.elementsIfPresent(of: .variation),
             reuseIdentifier:                           container.attributeIfPresent(of: .reuseIdentifier),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
-            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue)
+            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+            verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
+            horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
+            verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority)
         )
     }
 }

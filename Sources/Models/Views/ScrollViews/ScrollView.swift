@@ -23,6 +23,7 @@ public struct ScrollView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let colorLabel: String?
     public let isMisplaced: Bool?
     public let isAmbiguous: Bool?
+    public let isHidden: Bool?
     public let verifyAmbiguity: VerifyAmbiguity?
     public let opaque: Bool?
     public let rect: Rect?
@@ -44,6 +45,10 @@ public struct ScrollView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let isDirectionalLockEnabled: Bool?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let horizontalHuggingPriority: Int?
+    public let verticalHuggingPriority: Int?
+    public let horizontalCompressionResistancePriority: Int?
+    public let verticalCompressionResistancePriority: Int?
 
     enum ConstraintsCodingKeys: CodingKey { case constraint }
     enum VariationCodingKey: CodingKey { case variation }
@@ -56,6 +61,7 @@ public struct ScrollView: IBDecodable, ViewProtocol, IBIdentifiable {
                 switch key {
                 case .isMisplaced: return "misplaced"
                 case .isAmbiguous: return "ambiguous"
+                case .isHidden: return "hidden"
                 case .isPagingEnabled: return "pagingEnabled"
                 case .isDirectionalLockEnabled: return "directionalLockEnabled"
                 default: return key.stringValue
@@ -82,6 +88,7 @@ public struct ScrollView: IBDecodable, ViewProtocol, IBIdentifiable {
             colorLabel:                                container.attributeIfPresent(of: .colorLabel),
             isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
             isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
+            isHidden:                                  container.attributeIfPresent(of: .isHidden),
             verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
             opaque:                                    container.attributeIfPresent(of: .opaque),
             rect:                                      container.elementIfPresent(of: .rect),
@@ -102,7 +109,11 @@ public struct ScrollView: IBDecodable, ViewProtocol, IBIdentifiable {
             minimumZoomScale:                          container.attributeIfPresent(of: .minimumZoomScale),
             isDirectionalLockEnabled:                  container.attributeIfPresent(of: .isDirectionalLockEnabled),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
-            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue)
+            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+            verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
+            horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
+            verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority)
         )
     }
 }

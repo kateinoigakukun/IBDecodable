@@ -26,10 +26,10 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
     public let colorLabel: String?
     public let fixedFrame: Bool?
     public let fontDescription: FontDescription?
-    public let horizontalHuggingPriority: Int?
     public let lineBreakMode: String?
     public let isMisplaced: Bool?
     public let isAmbiguous: Bool?
+    public let isHidden: Bool?
     public let verifyAmbiguity: VerifyAmbiguity?
     public let opaque: Bool?
     public let rect: Rect?
@@ -40,12 +40,15 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
     public let attributedText: AttributedString?
     public let translatesAutoresizingMaskIntoConstraints: Bool?
     public let userInteractionEnabled: Bool?
-    public let verticalHuggingPriority: Int?
     public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
     public let connections: [AnyConnection]?
     public let variations: [Variation]?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let horizontalHuggingPriority: Int?
+    public let verticalHuggingPriority: Int?
+    public let horizontalCompressionResistancePriority: Int?
+    public let verticalCompressionResistancePriority: Int?
     public let adjustsFontForContentSizeCategory: Bool?
 
     enum ConstraintsCodingKeys: CodingKey { case constraint }
@@ -59,6 +62,7 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
                 switch key {
                 case .isMisplaced: return "misplaced"
                 case .isAmbiguous: return "ambiguous"
+                case .isHidden: return "hidden"
                 case .attributedText: return "attributedString"
                 default: return key.stringValue
                 }
@@ -86,10 +90,10 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
             colorLabel:                                container.attributeIfPresent(of: .colorLabel),
             fixedFrame:                                container.attributeIfPresent(of: .fixedFrame),
             fontDescription:                           container.elementIfPresent(of: .fontDescription),
-            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
             lineBreakMode:                             container.attributeIfPresent(of: .lineBreakMode),
             isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
             isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
+            isHidden:                                  container.attributeIfPresent(of: .isHidden),
             verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
             opaque:                                    container.attributeIfPresent(of: .opaque),
             rect:                                      container.elementIfPresent(of: .rect),
@@ -100,12 +104,15 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
             attributedText:                            container.elementIfPresent(of: .attributedText),
             translatesAutoresizingMaskIntoConstraints: container.attributeIfPresent(of: .translatesAutoresizingMaskIntoConstraints),
             userInteractionEnabled:                    container.attributeIfPresent(of: .userInteractionEnabled),
-            verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
             userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
             tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+            verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
+            horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
+            verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority),
             adjustsFontForContentSizeCategory:         container.attributeIfPresent(of: .adjustsFontForContentSizeCategory)
         )
     }

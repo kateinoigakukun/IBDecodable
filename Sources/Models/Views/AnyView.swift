@@ -24,6 +24,7 @@ public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBC
     var colorLabel: String? { get }
     var isMisplaced: Bool? { get }
     var isAmbiguous: Bool? { get }
+    var isHidden: Bool? { get }
     var verifyAmbiguity: VerifyAmbiguity? { get }
     var opaque: Bool? { get }
     var rect: Rect? { get }
@@ -35,6 +36,10 @@ public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBC
     var variations: [Variation]? { get }
     var backgroundColor: Color? { get }
     var tintColor: Color? { get }
+    var horizontalHuggingPriority: Int? { get }
+    var verticalHuggingPriority: Int? { get }
+    var horizontalCompressionResistancePriority: Int? { get }
+    var verticalCompressionResistancePriority: Int? { get }
 }
 
 // MARK: - AnyView
@@ -115,6 +120,21 @@ public struct AutoresizingMask: IBDecodable, IBKeyable {
     public let flexibleMaxX: Bool
     public let flexibleMinY: Bool
     public let flexibleMaxY: Bool
+
+    public static let `default` = AutoresizingMask(
+        key: "autoresizingMask", widthSizable: false, heightSizable: false,
+        flexibleMinX: false, flexibleMaxX: true,
+        flexibleMinY: false, flexibleMaxY: true
+    )
+    public init(key: String?, widthSizable: Bool, heightSizable: Bool, flexibleMinX: Bool, flexibleMaxX: Bool, flexibleMinY: Bool, flexibleMaxY: Bool) {
+        self.key = key
+        self.widthSizable = widthSizable
+        self.heightSizable = heightSizable
+        self.flexibleMinX = flexibleMinX
+        self.flexibleMaxX = flexibleMaxX
+        self.flexibleMinY = flexibleMinY
+        self.flexibleMaxY = flexibleMaxY
+    }
 
     static func decode(_ xml: XMLIndexerType) throws -> AutoresizingMask {
         let container = xml.container(keys: CodingKeys.self)

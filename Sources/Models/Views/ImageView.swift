@@ -27,6 +27,7 @@ public struct ImageView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let insetsLayoutMarginsFromSafeArea: Bool?
     public let isMisplaced: Bool?
     public let isAmbiguous: Bool?
+    public let isHidden: Bool?
     public let verifyAmbiguity: VerifyAmbiguity?
     public let multipleTouchEnabled: Bool?
     public let opaque: Bool?
@@ -39,6 +40,10 @@ public struct ImageView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let variations: [Variation]?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let horizontalHuggingPriority: Int?
+    public let verticalHuggingPriority: Int?
+    public let horizontalCompressionResistancePriority: Int?
+    public let verticalCompressionResistancePriority: Int?
 
     enum ConstraintsCodingKeys: CodingKey { case constraint }
     enum VariationCodingKey: CodingKey { case variation }
@@ -51,6 +56,7 @@ public struct ImageView: IBDecodable, ViewProtocol, IBIdentifiable {
                 switch key {
                 case .isMisplaced: return "misplaced"
                 case .isAmbiguous: return "ambiguous"
+                case .isHidden: return "hidden"
                 default: return key.stringValue
                 }
             }()
@@ -79,6 +85,7 @@ public struct ImageView: IBDecodable, ViewProtocol, IBIdentifiable {
             insetsLayoutMarginsFromSafeArea:           container.attributeIfPresent(of: .insetsLayoutMarginsFromSafeArea),
             isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
             isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
+            isHidden:                                  container.attributeIfPresent(of: .isHidden),
             verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
             multipleTouchEnabled:                      container.attributeIfPresent(of: .multipleTouchEnabled),
             opaque:                                    container.attributeIfPresent(of: .opaque),
@@ -90,7 +97,11 @@ public struct ImageView: IBDecodable, ViewProtocol, IBIdentifiable {
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
-            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue)
+            tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+            verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
+            horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
+            verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority)
         )
     }
 }
