@@ -18,4 +18,5 @@ public protocol InterfaceBuilderDocument {
     var colorMatched: Bool? {get}
     var device: Device? {get}
     var dependencies: [AnyDependency]? { get }
+    var resources: [AnyResource]? { get }
 }
