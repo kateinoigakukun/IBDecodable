@@ -172,7 +172,7 @@ public enum VerifyAmbiguity: XMLAttributeDecodable, KeyDecodable {
 
 public struct Constraint: IBDecodable, IBIdentifiable {
     public let id: String
-    public let constant: Int?
+    public let constant: Float?
     public let priority: Int?
     public let multiplier: String?
     public let firstItem: String?
