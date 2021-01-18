@@ -43,7 +43,7 @@ public struct StackView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let axis: String
     public let distribution: String?
     public let alignment: String?
-    public let spacing: Int?
+    public let spacing: Float?
     public let baselineRelativeArrangement: Bool?
 
     public var isVertical: Bool {

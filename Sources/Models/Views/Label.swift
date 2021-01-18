@@ -129,6 +129,10 @@ public enum FontDescription: IBDecodable {
     case custom(CustomFont)
     case textStyle(TextStyle)
 
+    public static let `default`: FontDescription = .system((
+        key: "fontDescription", type: "system", weight: nil, pointSize: 17.0
+    ))
+
     public var pointSize: Float? {
         switch self {
         case .system(let systemFont):
