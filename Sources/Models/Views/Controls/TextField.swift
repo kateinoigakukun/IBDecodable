@@ -36,6 +36,7 @@ public struct TextField: IBDecodable, ControlProtocol, IBIdentifiable {
     public let textAlignment: String?
     public let translatesAutoresizingMaskIntoConstraints: Bool?
     public let userInteractionEnabled: Bool?
+    public let viewLayoutGuide: LayoutGuide?
     public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
     public let connections: [AnyConnection]?
     public let variations: [Variation]?
@@ -104,6 +105,7 @@ public struct TextField: IBDecodable, ControlProtocol, IBIdentifiable {
             textAlignment:                             container.attributeIfPresent(of: .textAlignment),
             translatesAutoresizingMaskIntoConstraints: container.attributeIfPresent(of: .translatesAutoresizingMaskIntoConstraints),
             userInteractionEnabled:                    container.attributeIfPresent(of: .userInteractionEnabled),
+            viewLayoutGuide:                           container.elementIfPresent(of: .viewLayoutGuide),
             userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),

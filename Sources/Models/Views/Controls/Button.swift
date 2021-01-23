@@ -35,6 +35,7 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
     public let state: [State]?
     public let translatesAutoresizingMaskIntoConstraints: Bool?
     public let userInteractionEnabled: Bool?
+    public let viewLayoutGuide: LayoutGuide?
     public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
     public let connections: [AnyConnection]?
     public let variations: [Variation]?
@@ -122,6 +123,7 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
             state:                                     container.elementsIfPresent(of: .state),
             translatesAutoresizingMaskIntoConstraints: container.attributeIfPresent(of: .translatesAutoresizingMaskIntoConstraints),
             userInteractionEnabled:                    container.attributeIfPresent(of: .userInteractionEnabled),
+            viewLayoutGuide:                           container.elementIfPresent(of: .viewLayoutGuide),
             userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),

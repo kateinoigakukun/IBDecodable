@@ -31,6 +31,7 @@ public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBC
     var subviews: [AnyView]? { get }
     var translatesAutoresizingMaskIntoConstraints: Bool? { get }
     var userInteractionEnabled: Bool? { get }
+    var viewLayoutGuide: LayoutGuide? { get }
     var userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]? { get }
     var connections: [AnyConnection]? { get }
     var variations: [Variation]? { get }
