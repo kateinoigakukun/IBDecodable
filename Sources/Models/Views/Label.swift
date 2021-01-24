@@ -13,6 +13,7 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
     public let elementClass: String = "UILabel"
 
     public let adjustsFontSizeToFit: Bool?
+    public let adjustsLetterSpacingToFitWidth: Bool?
     public let key: String?
     public let autoresizingMask: AutoresizingMask?
     public let baselineAdjustment: String?
@@ -26,10 +27,14 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
     public let colorLabel: String?
     public let fixedFrame: Bool?
     public let fontDescription: FontDescription?
+    public let minimumFontSize: Float?
+    public let minimumScaleFactor: Float?
+    public let numberOfLines: Int?
     public let lineBreakMode: String?
     public let isMisplaced: Bool?
     public let isAmbiguous: Bool?
     public let isHidden: Bool?
+    public let highlighted: Bool?
     public let verifyAmbiguity: VerifyAmbiguity?
     public let opaque: Bool?
     public let rect: Rect?
@@ -37,6 +42,9 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
     public let text: String?
     public let textAlignment: String?
     public let textColor: Color?
+    public let highlightedColor: Color?
+    public let shadowColor: Color?
+    public let shadowOffset: Size?
     public let attributedText: AttributedString?
     public let translatesAutoresizingMaskIntoConstraints: Bool?
     public let userInteractionEnabled: Bool?
@@ -54,8 +62,9 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
 
     enum ConstraintsCodingKeys: CodingKey { case constraint }
     enum VariationCodingKey: CodingKey { case variation }
-    enum ExternalCodingKeys: CodingKey { case color }
+    enum ExternalCodingKeys: CodingKey { case color, size }
     enum ColorsCodingKeys: CodingKey { case key }
+    enum SizesCodingKeys: CodingKey { case key }
 
     static func decode(_ xml: XMLIndexerType) throws -> Label {
         let container = xml.container(keys: MappedCodingKey.self).map { (key: CodingKeys) in
@@ -74,10 +83,13 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
         let variationContainer = xml.container(keys: VariationCodingKey.self)
         let colorsContainer = xml.container(keys: ExternalCodingKeys.self)
             .nestedContainerIfPresent(of: .color, keys: ColorsCodingKeys.self)
+        let sizesContainer = xml.container(keys: ExternalCodingKeys.self)
+            .nestedContainerIfPresent(of: .size, keys: SizesCodingKeys.self)
 
         return Label(
             id:                                        try container.attribute(of: .id),
             adjustsFontSizeToFit:                      container.attributeIfPresent(of: .adjustsFontSizeToFit),
+            adjustsLetterSpacingToFitWidth:            container.attributeIfPresent(of: .adjustsLetterSpacingToFitWidth),
             key:                                       container.attributeIfPresent(of: .key),
             autoresizingMask:                          container.elementIfPresent(of: .autoresizingMask),
             baselineAdjustment:                        container.attributeIfPresent(of: .baselineAdjustment),
@@ -91,10 +103,14 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
             colorLabel:                                container.attributeIfPresent(of: .colorLabel),
             fixedFrame:                                container.attributeIfPresent(of: .fixedFrame),
             fontDescription:                           container.elementIfPresent(of: .fontDescription),
+            minimumFontSize:                           container.attributeIfPresent(of: .minimumFontSize),
+            minimumScaleFactor:                        container.attributeIfPresent(of: .minimumScaleFactor),
+            numberOfLines:                             container.attributeIfPresent(of: .numberOfLines),
             lineBreakMode:                             container.attributeIfPresent(of: .lineBreakMode),
             isMisplaced:                               container.attributeIfPresent(of: .isMisplaced),
             isAmbiguous:                               container.attributeIfPresent(of: .isAmbiguous),
             isHidden:                                  container.attributeIfPresent(of: .isHidden),
+            highlighted:                               container.attributeIfPresent(of: .highlighted),
             verifyAmbiguity:                           container.attributeIfPresent(of: .verifyAmbiguity),
             opaque:                                    container.attributeIfPresent(of: .opaque),
             rect:                                      container.elementIfPresent(of: .rect),
@@ -102,6 +118,9 @@ public struct Label: IBDecodable, ViewProtocol, IBIdentifiable {
             text:                                      container.attributeIfPresent(of: .text),
             textAlignment:                             container.attributeIfPresent(of: .textAlignment),
             textColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.textColor.stringValue),
+            highlightedColor:                          colorsContainer?.withAttributeElement(.key, CodingKeys.highlightedColor.stringValue),
+            shadowColor:                               colorsContainer?.withAttributeElement(.key, CodingKeys.shadowColor.stringValue),
+            shadowOffset:                              sizesContainer?.withAttributeElement(.key, CodingKeys.shadowOffset.stringValue),
             attributedText:                            container.elementIfPresent(of: .attributedText),
             translatesAutoresizingMaskIntoConstraints: container.attributeIfPresent(of: .translatesAutoresizingMaskIntoConstraints),
             userInteractionEnabled:                    container.attributeIfPresent(of: .userInteractionEnabled),
