@@ -14,12 +14,14 @@ public enum Color: IBDecodable {
     public typealias SRGB = (key: String?, red: Float, blue: Float, green: Float, alpha: Float)
     public typealias GenericGamma22Gray = CalibratedWhite
     public typealias Named = (key: String?, name: String)
+    public typealias Catalog = (key: String?, name: String, catalog: String)
     case calibratedWhite(CalibratedWhite)
     case calibratedRGB(CalibratedRGB)
     case genericGamma22Gray(GenericGamma22Gray)
     case sRGB(SRGB)
     case name(Named)
     case systemColor(Named)
+    case catalog(Catalog)
 
     public var calibratedRGB: CalibratedRGB? {
         switch self {
@@ -74,6 +76,10 @@ public enum Color: IBDecodable {
         case name
     }
 
+    enum CatalogCodingKeys: CodingKey {
+        case name, catalog
+    }
+
     static func decode(_ xml: XMLIndexerType) throws -> Color {
         let container = xml.container(keys: CodingKeys.self)
         let key: String? = container.attributeIfPresent(of: .key)
@@ -117,6 +123,11 @@ public enum Color: IBDecodable {
                 default:
                     throw IBError.unsupportedColorSpace(customColorSpace)
                 }
+            case "catalog":
+                let container = xml.container(keys: CatalogCodingKeys.self)
+                return try .catalog((key:     key,
+                                     name:    container.attribute(of: .name),
+                                     catalog: container.attribute(of: .catalog)))
             default:
                 throw IBError.unsupportedColorSpace(colorSpace)
             }
@@ -148,6 +159,8 @@ extension Color: AttributeProtocol {
             return named.key
         case .systemColor(let named):
             return named.key
+        case .catalog(let catalog):
+            return catalog.key
         }
     }
 
