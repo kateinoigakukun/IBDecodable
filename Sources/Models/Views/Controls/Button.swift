@@ -50,6 +50,7 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
     public let isSelected: Bool?
     public let contentHorizontalAlignment: String?
     public let contentVerticalAlignment: String?
+    public let showsTouchWhenHighlighted: Bool?
 
     public struct State: IBDecodable, IBKeyable {
         public let key: String?
@@ -144,7 +145,8 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
             isHighlighted:                             container.attributeIfPresent(of: .isHighlighted),
             isSelected:                                container.attributeIfPresent(of: .isSelected),
             contentHorizontalAlignment:                container.attributeIfPresent(of: .contentHorizontalAlignment),
-            contentVerticalAlignment:                  container.attributeIfPresent(of: .contentVerticalAlignment)
+            contentVerticalAlignment:                  container.attributeIfPresent(of: .contentVerticalAlignment),
+            showsTouchWhenHighlighted:                 container.attributeIfPresent(of: .showsTouchWhenHighlighted)
         )
     }
 }
