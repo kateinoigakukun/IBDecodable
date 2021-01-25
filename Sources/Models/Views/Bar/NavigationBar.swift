@@ -41,6 +41,9 @@ public struct NavigationBar: IBDecodable, ViewProtocol, IBIdentifiable {
     public let backgroundColor: Color?
     public let tintColor: Color?
     public let semanticContentAttribute: String?
+    public let insetsLayoutMarginsFromSafeArea: Bool?
+    public let layoutMarginsFollowReadableWidth: Bool?
+
     public let preservesSuperviewLayoutMargins: Bool?
     public let horizontalHuggingPriority: Int?
     public let verticalHuggingPriority: Int?
@@ -134,6 +137,8 @@ public struct NavigationBar: IBDecodable, ViewProtocol, IBIdentifiable {
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
             tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
             semanticContentAttribute:                  container.attributeIfPresent(of: .semanticContentAttribute),
+            insetsLayoutMarginsFromSafeArea:           container.attributeIfPresent(of: .insetsLayoutMarginsFromSafeArea),
+            layoutMarginsFollowReadableWidth:          container.attributeIfPresent(of: .layoutMarginsFollowReadableWidth),
             preservesSuperviewLayoutMargins:           container.attributeIfPresent(of: .preservesSuperviewLayoutMargins),
             horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
             verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),

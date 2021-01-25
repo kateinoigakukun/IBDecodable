@@ -41,6 +41,8 @@ public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBC
     var backgroundColor: Color? { get }
     var tintColor: Color? { get }
     var semanticContentAttribute: String? { get }
+    var insetsLayoutMarginsFromSafeArea: Bool? { get }
+    var layoutMarginsFollowReadableWidth: Bool? { get }
     var preservesSuperviewLayoutMargins: Bool? { get }
     var horizontalHuggingPriority: Int? { get }
     var verticalHuggingPriority: Int? { get }
