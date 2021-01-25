@@ -14,6 +14,8 @@ public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBC
 
     var key: String? { get }
     var autoresizingMask: AutoresizingMask? { get }
+    var autoresizesSubviews: Bool? { get }
+    var alpha: Float? { get }
     var clipsSubviews: Bool? { get }
     var constraints: [Constraint]? { get }
     var contentMode: String? { get }
@@ -35,8 +37,11 @@ public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBC
     var userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]? { get }
     var connections: [AnyConnection]? { get }
     var variations: [Variation]? { get }
+    var tag: Int? { get }
     var backgroundColor: Color? { get }
     var tintColor: Color? { get }
+    var semanticContentAttribute: String? { get }
+    var preservesSuperviewLayoutMargins: Bool? { get }
     var horizontalHuggingPriority: Int? { get }
     var verticalHuggingPriority: Int? { get }
     var horizontalCompressionResistancePriority: Int? { get }

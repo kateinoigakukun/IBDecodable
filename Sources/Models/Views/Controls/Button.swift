@@ -13,6 +13,8 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
 
     public let key: String?
     public let autoresizingMask: AutoresizingMask?
+    public let autoresizesSubviews: Bool?
+    public let alpha: Float?
     public let buttonType: String?
     public let clipsSubviews: Bool?
     public let constraints: [Constraint]?
@@ -39,8 +41,11 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
     public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
     public let connections: [AnyConnection]?
     public let variations: [Variation]?
+    public let tag: Int?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let semanticContentAttribute: String?
+    public let preservesSuperviewLayoutMargins: Bool?
     public let horizontalHuggingPriority: Int?
     public let verticalHuggingPriority: Int?
     public let horizontalCompressionResistancePriority: Int?
@@ -48,6 +53,9 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
     public let isEnabled: Bool?
     public let isHighlighted: Bool?
     public let isSelected: Bool?
+    public let contentEdgeInsets: Inset?
+    public let titleEdgeInsets: Inset?
+    public let imageEdgeInsets: Inset?
     public let contentHorizontalAlignment: String?
     public let contentVerticalAlignment: String?
     public let showsTouchWhenHighlighted: Bool?
@@ -82,8 +90,9 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
 
     enum ConstraintsCodingKeys: CodingKey { case constraint }
     enum VariationCodingKey: CodingKey { case variation }
-    enum ExternalCodingKeys: CodingKey { case color }
+    enum ExternalCodingKeys: CodingKey { case color, inset }
     enum ColorsCodingKeys: CodingKey { case key }
+    enum InsetsCodingKeys: CodingKey { case key }
 
     static func decode(_ xml: XMLIndexerType) throws -> Button {
         let container = xml.container(keys: MappedCodingKey.self).map { (key: CodingKeys) in
@@ -102,13 +111,18 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
         }
         let constraintsContainer = container.nestedContainerIfPresent(of: .constraints, keys: ConstraintsCodingKeys.self)
         let variationContainer = xml.container(keys: VariationCodingKey.self)
-        let colorsContainer = xml.container(keys: ExternalCodingKeys.self)
+        let externalContainer = xml.container(keys: ExternalCodingKeys.self)
+        let colorsContainer = externalContainer
             .nestedContainerIfPresent(of: .color, keys: ColorsCodingKeys.self)
+        let insetsContainer = externalContainer
+            .nestedContainerIfPresent(of: .inset, keys: InsetsCodingKeys.self)
 
         return Button(
             id:                                        try container.attribute(of: .id),
             key:                                       container.attributeIfPresent(of: .key),
             autoresizingMask:                          container.elementIfPresent(of: .autoresizingMask),
+            autoresizesSubviews:                       container.attributeIfPresent(of: .autoresizesSubviews),
+            alpha:                                     container.attributeIfPresent(of: .alpha),
             buttonType:                                container.attributeIfPresent(of: .buttonType),
             clipsSubviews:                             container.attributeIfPresent(of: .clipsSubviews),
             constraints:                               constraintsContainer?.elementsIfPresent(of: .constraint),
@@ -135,8 +149,11 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
             userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),
+            tag:                                       container.attributeIfPresent(of: .tag),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
             tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            semanticContentAttribute:                  container.attributeIfPresent(of: .semanticContentAttribute),
+            preservesSuperviewLayoutMargins:           container.attributeIfPresent(of: .preservesSuperviewLayoutMargins),
             horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
             verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
             horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
@@ -144,6 +161,9 @@ public struct Button: IBDecodable, ControlProtocol, IBIdentifiable {
             isEnabled:                                 container.attributeIfPresent(of: .isEnabled),
             isHighlighted:                             container.attributeIfPresent(of: .isHighlighted),
             isSelected:                                container.attributeIfPresent(of: .isSelected),
+            contentEdgeInsets:                         insetsContainer?.withAttributeElement(.key, CodingKeys.contentEdgeInsets.stringValue),
+            titleEdgeInsets:                           insetsContainer?.withAttributeElement(.key, CodingKeys.titleEdgeInsets.stringValue),
+            imageEdgeInsets:                           insetsContainer?.withAttributeElement(.key, CodingKeys.imageEdgeInsets.stringValue),
             contentHorizontalAlignment:                container.attributeIfPresent(of: .contentHorizontalAlignment),
             contentVerticalAlignment:                  container.attributeIfPresent(of: .contentVerticalAlignment),
             showsTouchWhenHighlighted:                 container.attributeIfPresent(of: .showsTouchWhenHighlighted)

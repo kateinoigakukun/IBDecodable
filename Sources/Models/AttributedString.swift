@@ -90,6 +90,7 @@ public struct Font: IBDecodable, AttributeProtocol {
     public let size: String?
     public let name: String?
     public let metaFont: String?
+    public let style: String?
 
     static func decode(_ xml: XMLIndexerType) throws -> Font {
         let container = xml.container(keys: CodingKeys.self)
@@ -97,7 +98,8 @@ public struct Font: IBDecodable, AttributeProtocol {
             key:        container.attributeIfPresent(of: .key),
             size:       container.attributeIfPresent(of: .size),
             name:       container.attributeIfPresent(of: .name),
-            metaFont:   container.attributeIfPresent(of: .metaFont)
+            metaFont:   container.attributeIfPresent(of: .metaFont),
+            style:      container.attributeIfPresent(of: .style)
         )
     }
 }

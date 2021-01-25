@@ -13,6 +13,8 @@ public struct Slider: IBDecodable, ControlProtocol, IBIdentifiable {
 
     public let key: String?
     public let autoresizingMask: AutoresizingMask?
+    public let autoresizesSubviews: Bool?
+    public let alpha: Float?
     public let clipsSubviews: Bool?
     public let constraints: [Constraint]?
     public let contentMode: String?
@@ -34,8 +36,11 @@ public struct Slider: IBDecodable, ControlProtocol, IBIdentifiable {
     public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
     public let connections: [AnyConnection]?
     public let variations: [Variation]?
+    public let tag: Int?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let semanticContentAttribute: String?
+    public let preservesSuperviewLayoutMargins: Bool?
     public let horizontalHuggingPriority: Int?
     public let verticalHuggingPriority: Int?
     public let horizontalCompressionResistancePriority: Int?
@@ -87,6 +92,8 @@ public struct Slider: IBDecodable, ControlProtocol, IBIdentifiable {
             id:                                        try container.attribute(of: .id),
             key:                                       container.attributeIfPresent(of: .key),
             autoresizingMask:                          container.elementIfPresent(of: .autoresizingMask),
+            autoresizesSubviews:                       container.attributeIfPresent(of: .autoresizesSubviews),
+            alpha:                                     container.attributeIfPresent(of: .alpha),
             clipsSubviews:                             container.attributeIfPresent(of: .clipsSubviews),
             constraints:                               constraintsContainer?.elementsIfPresent(of: .constraint),
             contentMode:                               container.attributeIfPresent(of: .contentMode),
@@ -108,8 +115,11 @@ public struct Slider: IBDecodable, ControlProtocol, IBIdentifiable {
             userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),
+            tag:                                       container.attributeIfPresent(of: .tag),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
             tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            semanticContentAttribute:                  container.attributeIfPresent(of: .semanticContentAttribute),
+            preservesSuperviewLayoutMargins:           container.attributeIfPresent(of: .preservesSuperviewLayoutMargins),
             horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
             verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
             horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),

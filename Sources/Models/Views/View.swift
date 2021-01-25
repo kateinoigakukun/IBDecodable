@@ -14,6 +14,8 @@ public struct View: IBDecodable, ViewProtocol, IBIdentifiable {
 
     public let key: String?
     public let autoresizingMask: AutoresizingMask?
+    public let autoresizesSubviews: Bool?
+    public let alpha: Float?
     public let clipsSubviews: Bool?
     public let constraints: [Constraint]?
     public let contentMode: String?
@@ -32,11 +34,19 @@ public struct View: IBDecodable, ViewProtocol, IBIdentifiable {
     public let translatesAutoresizingMaskIntoConstraints: Bool?
     public let userInteractionEnabled: Bool?
     public let viewLayoutGuide: LayoutGuide?
+    public let simulatedNavigationBarMetrics: SimulatedNavigationBarMetrics?
+    public let simulatedTabBarMetrics: SimulatedBottomBarMetrics?
+    public let simulatedToolbarMetrics: SimulatedBottomBarMetrics?
+    public let modalPageSheetSimulatedSizeMetrics: ModalPageSheetSimulatedSizeMetrics?
+    public let modalFormSheetSimulatedSizeMetrics: ModalFormSheetSimulatedSizeMetrics?
     public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
     public let connections: [AnyConnection]?
     public let variations: [Variation]?
+    public let tag: Int?
     public let backgroundColor: Color?
     public let tintColor: Color?
+    public let semanticContentAttribute: String?
+    public let preservesSuperviewLayoutMargins: Bool?
     public let horizontalHuggingPriority: Int?
     public let verticalHuggingPriority: Int?
     public let horizontalCompressionResistancePriority: Int?
@@ -69,6 +79,8 @@ public struct View: IBDecodable, ViewProtocol, IBIdentifiable {
             id:                                        try container.attribute(of: .id),
             key:                                       container.attributeIfPresent(of: .key),
             autoresizingMask:                          container.elementIfPresent(of: .autoresizingMask),
+            autoresizesSubviews:                       container.attributeIfPresent(of: .autoresizesSubviews),
+            alpha:                                     container.attributeIfPresent(of: .alpha),
             clipsSubviews:                             container.attributeIfPresent(of: .clipsSubviews),
             constraints:                               constraintsContainer?.elementsIfPresent(of: .constraint),
             contentMode:                               container.attributeIfPresent(of: .contentMode),
@@ -87,11 +99,19 @@ public struct View: IBDecodable, ViewProtocol, IBIdentifiable {
             translatesAutoresizingMaskIntoConstraints: container.attributeIfPresent(of: .translatesAutoresizingMaskIntoConstraints),
             userInteractionEnabled:                    container.attributeIfPresent(of: .userInteractionEnabled),
             viewLayoutGuide:                           container.elementIfPresent(of: .viewLayoutGuide),
+            simulatedNavigationBarMetrics:             container.elementIfPresent(of: .simulatedNavigationBarMetrics),
+            simulatedTabBarMetrics:                    container.elementIfPresent(of: .simulatedTabBarMetrics),
+            simulatedToolbarMetrics:                   container.elementIfPresent(of: .simulatedToolbarMetrics),
+            modalPageSheetSimulatedSizeMetrics:        container.elementIfPresent(of: .modalPageSheetSimulatedSizeMetrics),
+            modalFormSheetSimulatedSizeMetrics:        container.elementIfPresent(of: .modalFormSheetSimulatedSizeMetrics),
             userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
             connections:                               container.childrenIfPresent(of: .connections),
             variations:                                variationContainer.elementsIfPresent(of: .variation),
+            tag:                                       container.attributeIfPresent(of: .tag),
             backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
             tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
+            semanticContentAttribute:                  container.attributeIfPresent(of: .semanticContentAttribute),
+            preservesSuperviewLayoutMargins:           container.attributeIfPresent(of: .preservesSuperviewLayoutMargins),
             horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
             verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
             horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
@@ -115,3 +135,55 @@ public struct LayoutGuide: IBDecodable {
         )
     }
 }
+
+public struct SimulatedNavigationBarMetrics: IBDecodable {
+    public let key: String
+    public let translucent: Bool?
+    public let prompted: Bool?
+    static func decode(_ xml: XMLIndexerType) throws -> SimulatedNavigationBarMetrics {
+        let container = xml.container(keys: CodingKeys.self)
+        return try SimulatedNavigationBarMetrics(
+            key: container.attribute(of: .key),
+            translucent: container.attributeIfPresent(of: .translucent),
+            prompted: container.attributeIfPresent(of: .prompted)
+        )
+    }
+}
+
+public struct SimulatedBottomBarMetrics: IBDecodable {
+    public let key: String
+    public let translucent: Bool?
+    public let barStyle: String?
+
+    static func decode(_ xml: XMLIndexerType) throws -> SimulatedBottomBarMetrics {
+        let container = xml.container(keys: CodingKeys.self)
+        return try SimulatedBottomBarMetrics(
+            key: container.attribute(of: .key),
+            translucent: container.attributeIfPresent(of: .translucent),
+            barStyle: container.attributeIfPresent(of: .barStyle)
+        )
+    }
+}
+
+public struct ModalPageSheetSimulatedSizeMetrics: IBDecodable {
+    public let key: String
+
+    static func decode(_ xml: XMLIndexerType) throws -> ModalPageSheetSimulatedSizeMetrics {
+        let container = xml.container(keys: CodingKeys.self)
+        return try ModalPageSheetSimulatedSizeMetrics(
+            key: container.attribute(of: .key)
+        )
+    }
+}
+
+public struct ModalFormSheetSimulatedSizeMetrics: IBDecodable {
+    public let key: String
+
+    static func decode(_ xml: XMLIndexerType) throws -> ModalFormSheetSimulatedSizeMetrics {
+        let container = xml.container(keys: CodingKeys.self)
+        return try ModalFormSheetSimulatedSizeMetrics(
+            key: container.attribute(of: .key)
+        )
+    }
+}
+
