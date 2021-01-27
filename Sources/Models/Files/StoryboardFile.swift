@@ -15,6 +15,7 @@ public class StoryboardFile: InterfaceBuilderFile {
     public let ibType: IBType = .storyboard
     public let document: StoryboardDocument
 
+    #if !os(WASI)
     public init(path: String) throws {
         self.pathString = path
         self.document = try type(of: self).parseContent(pathString: path)
@@ -24,12 +25,14 @@ public class StoryboardFile: InterfaceBuilderFile {
         self.pathString = url.absoluteString
         self.document = try type(of: self).parseContent(url: url)
     }
+    #endif
 
     public init(xml: String) throws {
         self.pathString = "$temporary.storyboard"
         self.document = try type(of: self).parseContent(xml: xml)
     }
 
+    #if !os(WASI)
     private static func parseContent(pathString: String) throws -> StoryboardDocument {
         let content = try String(contentsOfFile: pathString)
         return try parseContent(xml: content)
@@ -40,6 +43,7 @@ public class StoryboardFile: InterfaceBuilderFile {
         let content = try Data(contentsOf: url)
         return try parser.parseDocument(data: content)
     }
+    #endif
 
     private static func parseContent(xml: String) throws -> StoryboardDocument {
         let parser = InterfaceBuilderParser()

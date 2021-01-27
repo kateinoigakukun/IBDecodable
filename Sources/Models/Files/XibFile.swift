@@ -15,6 +15,7 @@ public class XibFile: InterfaceBuilderFile {
     public let ibType: IBType = .xib
     public let document: XibDocument
 
+    #if !os(WASI)
     public init(path: String) throws {
         self.pathString = path
         self.document = try type(of: self).parseContent(pathString: path)
@@ -24,12 +25,14 @@ public class XibFile: InterfaceBuilderFile {
         self.pathString = url.absoluteString
         self.document = try type(of: self).parseContent(url: url)
     }
+    #endif
 
     public init(xml: String) throws {
         self.pathString = "$temporary.xib"
         self.document = try type(of: self).parseContent(xml: xml)
     }
 
+    #if !os(WASI)
     private static func parseContent(pathString: String) throws -> XibDocument {
         let content = try String(contentsOfFile: pathString)
         return try parseContent(xml: content)
@@ -40,6 +43,7 @@ public class XibFile: InterfaceBuilderFile {
         let content = try Data(contentsOf: url)
         return try parser.parseDocument(data: content)
     }
+    #endif
 
     private static func parseContent(xml: String) throws -> XibDocument {
         let parser = InterfaceBuilderParser()
