@@ -5,7 +5,7 @@
 //  Created by phimage on 05/04/2018.
 //
 
-import SWXMLHash
+
 
 public struct Outlet: IBDecodable, ConnectionProtocol {
     public let id: String

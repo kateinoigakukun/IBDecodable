@@ -5,8 +5,6 @@
 //  Created by phimage on 09/05/2018.
 //
 
-import SWXMLHash
-
 public enum TargetRuntime: String, XMLAttributeDecodable, KeyDecodable {
     case iOSCocoaTouch = "iOS.CocoaTouch"
     case iOSCocoaTouchIPad = "iOS.CocoaTouch.iPad"
@@ -17,7 +15,9 @@ public enum TargetRuntime: String, XMLAttributeDecodable, KeyDecodable {
 
     static func decode(_ attribute: XMLAttribute) throws -> TargetRuntime {
         guard let targetRuntime = TargetRuntime(rawValue: attribute.text) else {
-            throw XMLDeserializationError.implementationIsMissing(method: attribute.text)
+            throw XMLAttributeDecodeError.attributeDeserializationFailed(
+                type: "TargetRuntime", attribute: attribute
+            )
         }
         return targetRuntime
     }

@@ -5,7 +5,7 @@
 //  Created by SaitoYuta on 3/11/18.
 //
 
-import SWXMLHash
+
 
 public struct ImageView: IBDecodable, ViewProtocol, IBIdentifiable {
     public let id: String

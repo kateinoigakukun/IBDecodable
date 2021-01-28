@@ -5,7 +5,7 @@
 //  Created by phimage on 10/05/2018.
 //
 
-import SWXMLHash
+
 
 public enum Color: IBDecodable {
 

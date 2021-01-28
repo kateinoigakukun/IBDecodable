@@ -5,7 +5,7 @@
 //  Created by SaitoYuta on 2018/04/22.
 //
 
-import SWXMLHash
+
 
 protocol XMLIndexerContainerType {
 

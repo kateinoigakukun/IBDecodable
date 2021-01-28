@@ -5,7 +5,7 @@
 //  Created by phimage on 08/04/2018.
 //
 
-import SWXMLHash
+
 
 public struct AttributedString: IBDecodable, IBKeyable {
 

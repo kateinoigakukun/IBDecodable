@@ -5,8 +5,6 @@
 //  Created by eidd5180 on 11/10/2019.
 //
 
-import SWXMLHash
-
 public enum ModalTransitionStyle: XMLAttributeDecodable, KeyDecodable, Equatable {
     case coverVertical, flipHorizontal, crossDissolve, partialCurl
 

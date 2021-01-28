@@ -5,8 +5,6 @@
 //  Created by SaitoYuta on 3/11/18.
 //
 
-import SWXMLHash
-
 public enum IBError: Swift.Error, CustomStringConvertible {
     case elementNotFound
     case unsupportedViewClass(String)

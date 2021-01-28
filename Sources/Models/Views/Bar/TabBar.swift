@@ -5,7 +5,7 @@
 //  Created by phimage on 05/04/2018.
 //
 
-import SWXMLHash
+
 
 public struct TabBar: IBDecodable, ViewProtocol, IBIdentifiable {
     public let id: String

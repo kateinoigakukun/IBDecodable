@@ -5,7 +5,7 @@
 //  Created by SaitoYuta on 2017/12/13.
 //
 
-import SWXMLHash
+
 import Foundation
 
 public class XibFile: InterfaceBuilderFile {

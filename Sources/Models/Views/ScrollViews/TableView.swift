@@ -5,8 +5,6 @@
 //  Created by SaitoYuta on 3/11/18.
 //
 
-import SWXMLHash
-
 // MARK: - TableView
 
 public struct TableView: IBDecodable, ViewProtocol, IBIdentifiable {

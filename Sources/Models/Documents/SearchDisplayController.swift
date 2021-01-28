@@ -5,7 +5,7 @@
 //  Created by phimage on 09/05/2018.
 //
 
-import SWXMLHash
+
 
 public struct SearchDisplayController: IBDecodable, IBIdentifiable {
 

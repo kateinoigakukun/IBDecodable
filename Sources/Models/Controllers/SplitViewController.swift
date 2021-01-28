@@ -5,7 +5,7 @@
 //  Created by phimage on 04/04/2018.
 //
 
-import SWXMLHash
+
 
 public struct SplitViewController: IBDecodable, ViewControllerProtocol {
 

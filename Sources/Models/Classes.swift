@@ -5,7 +5,7 @@
 //  Created by phimage on 12/05/2018.
 //
 
-import SWXMLHash
+
 
 // MARK: - IBClass
 

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SWXMLHash
+
 
 class MapXMLIndexerContainer<From, Parent>: XMLIndexerContainerType where Parent: XMLIndexerContainerType {
 

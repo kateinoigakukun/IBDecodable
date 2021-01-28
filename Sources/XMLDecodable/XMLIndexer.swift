@@ -63,7 +63,7 @@ extension XMLIndexer: XMLIndexerType {
         switch self {
         case .element(let element):
             guard let attr = element.attribute(by: attr) else { throw XMLDeserializationError.nodeHasNoValue }
-            return try T.decode(attr)
+            return try T.decode((name: attr.name, text: attr.text))
         default: throw XMLDeserializationError.implementationIsMissing(method: "attributeValue for stream case")
         }
     }

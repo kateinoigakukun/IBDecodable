@@ -5,7 +5,7 @@
 //  Created by phimage on 02/04/2018.
 //
 
-import SWXMLHash
+
 
 public struct UserDefinedRuntimeAttribute: IBDecodable {
     public let keyPath: String

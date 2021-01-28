@@ -5,8 +5,6 @@
 //  Created by Steven Deutsch on 3/11/18.
 //
 
-import SWXMLHash
-
 // MARK: - ViewProtocol
 
 public protocol ViewProtocol: IBKeyable, IBCustomClassable, IBUserLabelable, IBConnectionOwner {

@@ -5,7 +5,7 @@
 //  Created by kateinoigakukun on 2021/01/18.
 //
 
-import SWXMLHash
+
 
 public struct SystemColor: IBDecodable, ResourceProtocol {
     public let name: String
