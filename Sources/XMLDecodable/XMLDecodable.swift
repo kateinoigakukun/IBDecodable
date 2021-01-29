@@ -33,7 +33,7 @@ enum XMLAttributeDecodeError: Error {
 
 extension String: XMLAttributeDecodable {
     static func decode(_ attribute: XMLAttribute) throws -> String {
-        attribute.text
+        return attribute.text
     }
 }
 extension Int: XMLAttributeDecodable {
