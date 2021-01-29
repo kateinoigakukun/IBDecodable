@@ -247,6 +247,16 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
     public var subviews: [AnyView]? {
         return (_subviews ?? []) + [AnyView(contentView)]
     }
+    public let indentationWidth: Int?
+    public let indentationLevel: Int?
+    public let shouldIndentWhileEditing: Bool?
+    public let style: String?
+    public let selectionStyle: String?
+    public let accessoryType: String?
+    public let editingAccessoryType: String?
+    public let focusStyle: String?
+    public let textLabel: String?
+    public let separatorInset: Inset?
     public let translatesAutoresizingMaskIntoConstraints: Bool?
     public let userInteractionEnabled: Bool?
     public let viewLayoutGuide: LayoutGuide?
@@ -291,8 +301,8 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
 
         public let key: String?
         public let autoresizingMask: AutoresizingMask?
-    public let autoresizesSubviews: Bool?
-    public let alpha: Float?
+        public let autoresizesSubviews: Bool?
+        public let alpha: Float?
         public let clipsSubviews: Bool?
         public let constraints: [Constraint]?
         public let contentMode: String?
@@ -314,15 +324,15 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
         public let userDefinedRuntimeAttributes: [UserDefinedRuntimeAttribute]?
         public let connections: [AnyConnection]?
         public let variations: [Variation]?
-    public let tag: Int?
+        public let tag: Int?
         public let backgroundColor: Color?
         public let tintColor: Color?
         public let semanticContentAttribute: String?
-    public let insetsLayoutMarginsFromSafeArea: Bool?
-    public let layoutMarginsFollowReadableWidth: Bool?
+        public let insetsLayoutMarginsFromSafeArea: Bool?
+        public let layoutMarginsFollowReadableWidth: Bool?
 
-    public let preservesSuperviewLayoutMargins: Bool?
-    public let horizontalHuggingPriority: Int?
+        public let preservesSuperviewLayoutMargins: Bool?
+        public let horizontalHuggingPriority: Int?
         public let verticalHuggingPriority: Int?
         public let horizontalCompressionResistancePriority: Int?
         public let verticalCompressionResistancePriority: Int?
@@ -333,23 +343,23 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
                     switch key {
                     case .isMisplaced: return "misplaced"
                     case .isAmbiguous: return "ambiguous"
-                case .isHidden: return "hidden"
+                    case .isHidden: return "hidden"
                     default: return key.stringValue
                     }
                 }()
                 return MappedCodingKey(stringValue: stringValue)
             }
             let constraintsContainer = container.nestedContainerIfPresent(of: .constraints, keys: ConstraintsCodingKeys.self)
-        let variationContainer = xml.container(keys: VariationCodingKey.self)
-        let colorsContainer = xml.container(keys: ExternalCodingKeys.self)
-            .nestedContainerIfPresent(of: .color, keys: ColorsCodingKeys.self)
-
+            let variationContainer = xml.container(keys: VariationCodingKey.self)
+            let colorsContainer = xml.container(keys: ExternalCodingKeys.self)
+                .nestedContainerIfPresent(of: .color, keys: KeyCodingKeys.self)
+            
             return TableViewContentView(
                 id:                                        try container.attribute(of: .id),
                 key:                                       container.attributeIfPresent(of: .key),
                 autoresizingMask:                          container.elementIfPresent(of: .autoresizingMask),
-            autoresizesSubviews:                       container.attributeIfPresent(of: .autoresizesSubviews),
-            alpha:                                     container.attributeIfPresent(of: .alpha),
+                autoresizesSubviews:                       container.attributeIfPresent(of: .autoresizesSubviews),
+                alpha:                                     container.attributeIfPresent(of: .alpha),
                 clipsSubviews:                             container.attributeIfPresent(of: .clipsSubviews),
                 constraints:                               constraintsContainer?.elementsIfPresent(of: .constraint),
                 contentMode:                               container.attributeIfPresent(of: .contentMode),
@@ -371,14 +381,14 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
                 userDefinedRuntimeAttributes:              container.childrenIfPresent(of: .userDefinedRuntimeAttributes),
                 connections:                               container.childrenIfPresent(of: .connections),
                 variations:                                variationContainer.elementsIfPresent(of: .variation),
-            tag:                                       container.attributeIfPresent(of: .tag),
+                tag:                                       container.attributeIfPresent(of: .tag),
                 backgroundColor:                           colorsContainer?.withAttributeElement(.key, CodingKeys.backgroundColor.stringValue),
                 tintColor:                                 colorsContainer?.withAttributeElement(.key, CodingKeys.tintColor.stringValue),
                 semanticContentAttribute:                  container.attributeIfPresent(of: .semanticContentAttribute),
-            insetsLayoutMarginsFromSafeArea:           container.attributeIfPresent(of: .insetsLayoutMarginsFromSafeArea),
-            layoutMarginsFollowReadableWidth:          container.attributeIfPresent(of: .layoutMarginsFollowReadableWidth),
-            preservesSuperviewLayoutMargins:           container.attributeIfPresent(of: .preservesSuperviewLayoutMargins),
-            horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
+                insetsLayoutMarginsFromSafeArea:           container.attributeIfPresent(of: .insetsLayoutMarginsFromSafeArea),
+                layoutMarginsFollowReadableWidth:          container.attributeIfPresent(of: .layoutMarginsFollowReadableWidth),
+                preservesSuperviewLayoutMargins:           container.attributeIfPresent(of: .preservesSuperviewLayoutMargins),
+                horizontalHuggingPriority:                 container.attributeIfPresent(of: .horizontalHuggingPriority),
                 verticalHuggingPriority:                   container.attributeIfPresent(of: .verticalHuggingPriority),
                 horizontalCompressionResistancePriority:   container.attributeIfPresent(of: .horizontalCompressionResistancePriority),
                 verticalCompressionResistancePriority:     container.attributeIfPresent(of: .verticalCompressionResistancePriority)
@@ -388,8 +398,8 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
 
     enum ConstraintsCodingKeys: CodingKey { case constraint }
     enum VariationCodingKey: CodingKey { case variation }
-    enum ExternalCodingKeys: CodingKey { case color }
-    enum ColorsCodingKeys: CodingKey { case key }
+    enum ExternalCodingKeys: CodingKey { case color, inset }
+    enum KeyCodingKeys: CodingKey { case key }
 
     static func decode(_ xml: XMLIndexerType) throws -> TableViewCell {
         let container = xml.container(keys: MappedCodingKey.self).map { (key: CodingKeys) in
@@ -408,7 +418,9 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
         let constraintsContainer = container.nestedContainerIfPresent(of: .constraints, keys: ConstraintsCodingKeys.self)
         let variationContainer = xml.container(keys: VariationCodingKey.self)
         let colorsContainer = xml.container(keys: ExternalCodingKeys.self)
-            .nestedContainerIfPresent(of: .color, keys: ColorsCodingKeys.self)
+            .nestedContainerIfPresent(of: .color, keys: KeyCodingKeys.self)
+        let insetsContainer = xml.container(keys: ExternalCodingKeys.self)
+            .nestedContainerIfPresent(of: .inset, keys: KeyCodingKeys.self)
 
         return TableViewCell(
             id:                                        try container.attribute(of: .id),
@@ -432,6 +444,16 @@ public struct TableViewCell: IBDecodable, ViewProtocol, IBIdentifiable, IBReusab
             opaque:                                    container.attributeIfPresent(of: .opaque),
             rect:                                      container.elementIfPresent(of: .rect),
             _subviews:                                 container.childrenIfPresent(of: ._subviews),
+            indentationWidth:                          container.attributeIfPresent(of: .indentationWidth),
+            indentationLevel:                          container.attributeIfPresent(of: .indentationLevel),
+            shouldIndentWhileEditing:                  container.attributeIfPresent(of: .shouldIndentWhileEditing),
+            style:                                     container.attributeIfPresent(of: .style),
+            selectionStyle:                            container.attributeIfPresent(of: .selectionStyle),
+            accessoryType:                             container.attributeIfPresent(of: .accessoryType),
+            editingAccessoryType:                      container.attributeIfPresent(of: .editingAccessoryType),
+            focusStyle:                                container.attributeIfPresent(of: .focusStyle),
+            textLabel:                                 container.attributeIfPresent(of: .textLabel),
+            separatorInset:                            insetsContainer?.withAttributeElement(.key, "separatorInset"),
             translatesAutoresizingMaskIntoConstraints: container.attributeIfPresent(of: .translatesAutoresizingMaskIntoConstraints),
             userInteractionEnabled:                    container.attributeIfPresent(of: .userInteractionEnabled),
             viewLayoutGuide:                           container.elementIfPresent(of: .viewLayoutGuide),
